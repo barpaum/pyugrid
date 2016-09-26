@@ -934,8 +934,8 @@ class UGrid(object):
                                               self._nodes.dtype,
                                               (mesh_name + '_num_node',),
                                               chunksizes=(len(self.nodes), ),
-                                              # zlib=False,
-                                              # complevel=0,
+                                              zlib=True,
+                                              complevel=4,
                                               )
             node_lon[:] = self.nodes[:, 0]
             node_lon.standard_name = "longitude"
@@ -946,8 +946,8 @@ class UGrid(object):
                                               self._nodes.dtype,
                                               (mesh_name + '_num_node',),
                                               chunksizes=(len(self.nodes), ),
-                                              # zlib=False,
-                                              # complevel=0,
+                                              zlib=True,
+                                              complevel=4,
                                               )
             node_lat[:] = self.nodes[:, 1]
             node_lat.standard_name = "latitude"
@@ -983,8 +983,8 @@ class UGrid(object):
                                                   dataset.data.dtype,
                                                   shape,
                                                   chunksizes=chunksizes,
-                                                  # zlib=False,
-                                                  # complevel=0,
+                                                  zlib=True,
+                                                  complevel=4,
                                                   )
                 data_var[:] = dataset.data
                 # Add the standard attributes:
