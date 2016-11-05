@@ -826,7 +826,7 @@ class UGrid(object):
         # FIXME: Why not use netCDF4.Dataset instead of renaming?
         from netCDF4 import Dataset as ncDataset
         # Create a new netcdf file.
-        with ncDataset(filepath, mode="w", clobber=True) as nclocal:
+        with ncDataset(filepath, mode="w", clobber=True, format="NETCDF4_CLASSIC") as nclocal:
 
             nclocal.createDimension(mesh_name + '_num_node', len(self.nodes))
             if self._edges is not None:
@@ -841,6 +841,7 @@ class UGrid(object):
                 nclocal.createDimension(mesh_name + '_num_vertices',
                                         self.faces.shape[1])
             nclocal.createDimension('two', 2)
+            nclocal.createDimension('time', None)
 
             # mesh topology
             mesh = nclocal.createVariable(mesh_name, IND_DT, (), )
@@ -848,6 +849,8 @@ class UGrid(object):
             mesh.long_name = "Topology data of 2D unstructured mesh"
             mesh.topology_dimension = 2
             mesh.node_coordinates = "{0}_node_lon {0}_node_lat".format(mesh_name)  # noqa
+            mesh.face_dimension = mesh_name + '_num_face'
+            mesh.edge_dimension = mesh_name + '_num_edge'
 
             if self.edges is not None:
                 # Attribute required if variables will be defined on edges.
